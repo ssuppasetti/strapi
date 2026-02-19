@@ -1,0 +1,48 @@
+{
+  "family": "strapi-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "strapi",
+      "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/strapi:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 1337,
+          "hostPort": 1337,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "HOST", "value": "0.0.0.0" },
+        { "name": "PORT", "value": "1337" },
+        { "name": "DATABASE_CLIENT", "value": "postgres" },
+        { "name": "DATABASE_HOST", "value": "<RDS_ENDPOINT>" },
+        { "name": "DATABASE_PORT", "value": "5432" },
+        { "name": "DATABASE_NAME", "value": "strapi" },
+        { "name": "DATABASE_USERNAME", "value": "<DB_USER>" },
+        { "name": "DATABASE_PASSWORD", "value": "<DB_PASSWORD>" },
+        { "name": "DATABASE_SSL", "value": "true" },
+        { "name": "APP_KEYS", "value": "<APP_KEYS>" },
+        { "name": "API_TOKEN_SALT", "value": "<API_TOKEN_SALT>" },
+        { "name": "ADMIN_JWT_SECRET", "value": "<ADMIN_JWT_SECRET>" },
+        { "name": "TRANSFER_TOKEN_SALT", "value": "<TRANSFER_TOKEN_SALT>" },
+        { "name": "JWT_SECRET", "value": "<JWT_SECRET>" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/strapi",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

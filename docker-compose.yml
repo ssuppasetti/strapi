@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: strapi-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-strapi}
+      POSTGRES_USER: ${DATABASE_USERNAME:-strapi}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-strapi}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  strapi:
+    image: node:20-alpine
+    container_name: strapi-app
+    depends_on:
+      - db
+    working_dir: /opt/app
+    command: sh -c "npm ci && npm run develop"
+    env_file:
+      - .env
+    volumes:
+      - ./:/opt/app
+      - /opt/app/node_modules
+    ports:
+      - "1337:1337"
+
+volumes:
+  db_data:
