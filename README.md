@@ -115,6 +115,100 @@ Example start + publish flow:
 # check S3 bucket for new JSON event object
 ```
 
+## 3.3) How to add new content (JSON files)
+
+### Folder structure
+
+- **Collection type** (many records):
+  - `cms/src/api/<api-name>/content-types/<singular-name>/schema.json`
+- **Single type** (one global record):
+  - `cms/src/api/<api-name>/content-types/<singular-name>/schema.json`
+- **Components** (reusable nested blocks):
+  - `cms/src/components/<category>/<component-name>.json`
+
+### Collection type vs Single type
+
+- Use `"kind": "collectionType"` when you need multiple entries (e.g. `movies`, `profiles`).
+- Use `"kind": "singleType"` when you need one global entry (e.g. `settings`, `homepage`).
+
+### Important naming rules
+
+- In Strapi v5, the content-type key/folder must match `info.singularName`.
+- `info.pluralName` must be globally unique across your project.
+- Keep names lowercase and kebab-case.
+
+### Step-by-step
+
+1. Create component JSON files under `cms/src/components/...`.
+2. Create or update content-type `schema.json` under `cms/src/api/.../content-types/...`.
+3. Start/restart Strapi:
+
+```bash
+./stop-strapi-local.sh
+./start-strapi-local.sh
+```
+
+4. Open `http://localhost:1337/admin` and verify the type appears in Content Manager.
+
+### Current example in this repo
+
+- Single type schema:
+  - `cms/src/api/settings/content-types/settings/schema.json`
+- Components used by it:
+  - `cms/src/components/settings/parental-controls.json`
+  - `cms/src/components/settings/forgot-password.json`
+  - `cms/src/components/settings/user-settings.json`
+
+### Starter template: Collection type
+
+```json
+{
+  "kind": "collectionType",
+  "collectionName": "<plural_db_table_name>",
+  "info": {
+    "singularName": "<singular-name>",
+    "pluralName": "<plural-name>",
+    "displayName": "<Display Name>",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" }
+  }
+}
+```
+
+Save as:
+- `cms/src/api/<api-name>/content-types/<singular-name>/schema.json`
+
+### Starter template: Single type
+
+```json
+{
+  "kind": "singleType",
+  "collectionName": "<db_table_name>",
+  "info": {
+    "singularName": "<singular-name>",
+    "pluralName": "<unique-plural-name>",
+    "displayName": "<Display Name>",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "headline": { "type": "string" },
+    "enabled": { "type": "boolean", "default": true }
+  }
+}
+```
+
+Save as:
+- `cms/src/api/<api-name>/content-types/<singular-name>/schema.json`
+
 ## 4) Build production image locally
 
 ```bash

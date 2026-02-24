@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_settings_parental_controls",
+  "info": {
+    "displayName": "Parental Controls"
+  },
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "pinRequired": {
+      "type": "boolean",
+      "default": true
+    },
+    "minAllowedMaturityRating": {
+      "type": "enumeration",
+      "enum": ["G", "PG", "PG-13", "R", "NC-17"],
+      "default": "PG-13"
+    },
+    "kidProfileAutoLock": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

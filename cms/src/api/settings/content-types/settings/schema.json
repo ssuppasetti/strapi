@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "settings",
+  "info": {
+    "singularName": "settings",
+    "pluralName": "app-settings",
+    "displayName": "Settings",
+    "description": "Global settings for account, security, and preferences"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "parentalControls": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.parental-controls"
+    },
+    "forgotPassword": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.forgot-password"
+    },
+    "userSettings": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.user-settings"
+    }
+  }
+}

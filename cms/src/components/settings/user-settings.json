@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_settings_user_settings",
+  "info": {
+    "displayName": "User Settings"
+  },
+  "attributes": {
+    "defaultLanguage": {
+      "type": "enumeration",
+      "enum": ["en", "es", "fr", "de", "pt", "hi"],
+      "default": "en"
+    },
+    "autoplayNextEpisode": {
+      "type": "boolean",
+      "default": true
+    },
+    "autoplayPreviews": {
+      "type": "boolean",
+      "default": false
+    },
+    "allowProfileTransfer": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
